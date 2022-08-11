@@ -1,18 +1,37 @@
+
+
+import 'package:bloc/bloc.dart';
+
 import 'package:flutter/material.dart';
-import 'package:myfirstproject/modules/bmi/bmiCalcuator.dart';
-import 'package:myfirstproject/modules/challenge/flightchallenge.dart';
-import 'package:myfirstproject/modules/login/login.dart';
+
+import 'package:myfirstproject/shared/blocObserve.dart';
 
 
-void main() => runApp(MyApp());
+import 'layout/home_layout.dart';
+
+void main() {
+
+  BlocOverrides.runZoned(
+        () {
+          runApp( MyApp());
+      // Use cubits...
+    },
+    blocObserver: MyBlocObserver(),
+  );
+ // initializeDateFormatting().then((_) => runApp( MyApp()));
+}
 
 class MyApp extends StatelessWidget {
+  // const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return  MaterialApp(
+      theme: ThemeData(
+        primaryColor: Color(0xff3BAC62),
+      ),
       debugShowCheckedModeBanner: false,
-
-      home: LoginScreen(),
+      home: Home_layout(),
     );
   }
 }

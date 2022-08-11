@@ -9,8 +9,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  var emailController = TextEditingController();
-  var passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   final _formKey = GlobalKey<FormState>();
 
   bool isPassword = true;
@@ -40,11 +40,14 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 defaultFormField(controller: emailController,
                     type: TextInputType.emailAddress,
-                    validate:(String value){
-                            if( value.isEmpty){
-                            return 'email null';
-                            }
-                            },
+                    validate:(String? value){
+
+
+                      if (value !=null && value.isEmpty) {
+                     return 'Passwords must to be at least 6 characters';
+                     }
+                        return null;
+                           },
                     label: "email",
                     prefixe: Icons.email),
                   SizedBox(
@@ -52,7 +55,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
               defaultFormField(
                 controller: passwordController,
-                suffix: isPassword ? Icons.visibility_off : Icons.visibility_off,
+                suffix: isPassword ? Icons.visibility : Icons.visibility_off,
                 isPassword: isPassword,
                 suffixPressed: (){
                   setState(() {
@@ -62,7 +65,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
                 type: TextInputType.visiblePassword,
                 validate: (value){
-                if(value.isEmpty){
+                if(value !=null && value.isEmpty){
                   return 'password null';
                 }
                 return null;
@@ -80,9 +83,11 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                  defaultButton(
                      function: (){
-                 if(_formKey.currentState!.validate()){
-                   print(emailController.text);
-                   }
+                       setState(() {
+                         if(_formKey.currentState!.validate()){
+                           print(emailController.text);
+                         }
+                       });
                  }, text: "login"),
                   SizedBox(
                     height: 10.0,
